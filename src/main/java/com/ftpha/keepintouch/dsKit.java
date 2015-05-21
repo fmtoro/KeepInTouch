@@ -76,13 +76,13 @@ public class dsKit {
         values.put(ftDB.U_C_EMAIL, user.getUEmail());
         values.put(ftDB.U_C_IMAGE, user.getUImge());
 
-        values.put(ftDB.U_C_FROM,       user.getUFrom());
-        values.put(ftDB.U_C_TO,         user.getCTo());
-        values.put(ftDB.U_C_UNIT,       user.getCUnit());
-        values.put(ftDB.U_C_USE_SMS,    user.getCSMS());
-        values.put(ftDB.U_C_USE_EMAIL,  user.getCEmail());
-        values.put(ftDB.U_C_JUST_MF,    user.getCJustMF());
-        values.put(ftDB.U_C_ACTIVE,     user.getCActive());
+        values.put(ftDB.U_C_FROM, user.getUFrom());
+        values.put(ftDB.U_C_TO, user.getUTo());
+        values.put(ftDB.U_C_UNIT, user.getUUnit());
+        values.put(ftDB.U_C_USE_SMS, user.getUUseSMS());
+        values.put(ftDB.U_C_USE_EMAIL, user.getUEmail());
+        values.put(ftDB.U_C_JUST_MF, user.getUJustMF());
+        values.put(ftDB.U_C_ACTIVE,     user.getUActive());
 
 
         long insertUId = db.insert(ftDB.T_USERS, null,values );
@@ -94,12 +94,55 @@ public class dsKit {
     public User createUser(String nom,
                            String phone,
                            String email,
-                           String image){
+                           String image,
+
+                           String uFrom,
+                           String uTo,
+                           String uUnit,
+                           String uUseSMS,
+                           String uUseEmail,
+                           String uJustMF,
+                           String uActive
+    ){
+        User user = new User();
+
+        user.setUName       (nom);
+        user.setUPhone(phone);
+        user.setUEmail(email);
+        user.setUImge(image);
+
+        user.setUFrom(uFrom);
+        user.setUTo(uTo);
+        user.setUUnit(uUnit);
+        user.setUUseSMS(uUseSMS);
+        user.setUUseEmail(uUseEmail);
+        user.setUJustMF(uJustMF);
+        user.setUActive(uActive);
+
+        user = createUser(user);
+        Log.i(LOGTAG, "User created with Id: " + user.getUId());
+
+        return user;
+    }
+
+    public User createUser(String nom,
+                           String phone,
+                           String email,
+                           String image) {
         User user = new User();
         user.setUName(nom);
         user.setUPhone(phone);
         user.setUEmail(email);
         user.setUImge(image);
+
+        user.setUFrom("1");
+        user.setUTo("5");
+        user.setUUnit("Week");
+        user.setUUseSMS("Yes");
+        user.setUUseEmail("No");
+        user.setUJustMF("Yes");
+        user.setUActive("Yes");
+
         user = createUser(user);
         Log.i(LOGTAG, "User created with Id: " + user.getUId());
 
@@ -107,11 +150,20 @@ public class dsKit {
     }
     public boolean updateUser(User u){
 
-        return  updateUser(u.getUId(),
+        return  updateUser(
+                u.getUId(),
                 u.getUName(),
                 u.getUPhone(),
                 u.getUEmail(),
-                u.getUImge());
+                u.getUImge(),
+
+                u.getUFrom(),
+                u.getUTo(),
+                u.getUUnit(),
+                u.getUUseSMS(),
+                u.getUUseEmail(),
+                u.getUJustMF(),
+                u.getUActive());
 
     }
 
@@ -120,7 +172,16 @@ public class dsKit {
             String nuName,
             String nuPhone,
             String nuEmail,
-            String nuImage){
+            String nuImage,
+
+            String uFrom        ,
+            String uTo          ,
+            String uUnit        ,
+            String uUseSMS      ,
+            String uUseEmail    ,
+            String uJustMF      ,
+            String uActive
+    ){
 
         Open();
         ContentValues vals = new ContentValues();
@@ -130,12 +191,19 @@ public class dsKit {
         vals.put(ftDB.U_C_EMAIL, nuEmail);
         vals.put(ftDB.U_C_IMAGE, nuImage);
 
+        vals.put(ftDB.U_C_FROM,      uFrom      );
+        vals.put(ftDB.U_C_TO,        uTo        );
+        vals.put(ftDB.U_C_UNIT,      uUnit      );
+        vals.put(ftDB.U_C_USE_SMS,   uUseSMS    );
+        vals.put(ftDB.U_C_USE_EMAIL, uUseEmail  );
+        vals.put(ftDB.U_C_JUST_MF,   uJustMF    );
+        vals.put(ftDB.U_C_ACTIVE,    uActive    );
+
 
         boolean rslt;
 
         rslt = db.update(ftDB.T_USERS, vals, ftDB.U_C_ID + " = " + uID,null ) == 1;
-        //myDB.update(TableName, cv, "_id " + "="+1, null);
-        //db.rawQuery(sqlStat, null);
+        Close();
 
             return rslt;
     }
@@ -157,6 +225,14 @@ public class dsKit {
                 if (cursor.getString(cursor.getColumnIndex(ftDB.U_C_IMAGE)) != null) {
                     user.setUImge(cursor.getString(cursor.getColumnIndex(ftDB.U_C_IMAGE)));
                 }
+                user.setUFrom(cursor.getString(cursor.getColumnIndex(ftDB.U_C_FROM)));
+                user.setUTo(cursor.getString(cursor.getColumnIndex(ftDB.U_C_TO)));
+                user.setUUnit(cursor.getString(cursor.getColumnIndex(ftDB.U_C_UNIT)));
+                user.setUUseSMS(cursor.getString(cursor.getColumnIndex(ftDB.U_C_USE_SMS)));
+                user.setUUseEmail(cursor.getString(cursor.getColumnIndex(ftDB.U_C_USE_EMAIL)));
+                user.setUJustMF(cursor.getString(cursor.getColumnIndex(ftDB.U_C_JUST_MF)));
+                user.setUActive(cursor.getString(cursor.getColumnIndex(ftDB.U_C_ACTIVE)));
+
                 users.add(user);
             }
         }
@@ -168,32 +244,7 @@ public class dsKit {
 
 
 
-    public List<Cat> findAllCats(){
-        List<Cat> cats = new ArrayList<Cat>();
 
-        Cursor cursor = db.query(ftDB.T_CATS, allCTCs, null, null, null, null, null);
-
-        Log.i(LOGTAG, "Found " + cursor.getCount() + " rows in " + ftDB.T_CATS);
-
-        if (cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                Cat cat = new Cat();
-                cat.setCId(cursor.getLong(cursor.getColumnIndex(ftDB.C_C_ID)));
-                cat.setCName(cursor.getString(cursor.getColumnIndex(ftDB.C_C_NAME)));
-                cat.setCFrom(cursor.getString(cursor.getColumnIndex(ftDB.C_C_FROM)));
-                cat.setCTo(cursor.getString(cursor.getColumnIndex(ftDB.C_C_TO)));
-                cat.setCUnit(cursor.getString(cursor.getColumnIndex(ftDB.C_C_UNIT)));
-                cat.setCSMS(cursor.getString(cursor.getColumnIndex(ftDB.C_C_SMS)));
-                cat.setCEmail(cursor.getString(cursor.getColumnIndex(ftDB.C_C_EMAIL)));
-                cat.setCJustMF(cursor.getString(cursor.getColumnIndex(ftDB.C_C_JUST_MF)));
-                cat.setCActive(cursor.getString(cursor.getColumnIndex(ftDB.C_C_ACTIVE)));
-                cat.setUId(cursor.getLong(cursor.getColumnIndex(ftDB.C_C_FK_USER)));
-                cats.add(cat);
-            }
-        }
-
-        return cats;
-    }
 
     public ftList createList(ftList fTList){
 
@@ -201,7 +252,7 @@ public class dsKit {
 
         values.put(ftDB.L_C_NAME, fTList.getLName());
         values.put(ftDB.L_C_TEXT, fTList.getLText());
-        values.put(ftDB.L_C_FK_CAT , fTList.getCId()   );
+        values.put(ftDB.L_C_FK_USER , fTList.getUId()   );
 
         long insertLId = db.insert(ftDB.T_LISTS, null, values);
         fTList.setLId(insertLId);
@@ -223,7 +274,7 @@ public class dsKit {
                 list.setLId(cursor.getLong(cursor.getColumnIndex(ftDB.L_C_ID)));
                 list.setLName(cursor.getString(cursor.getColumnIndex(ftDB.L_C_NAME)));
                 list.setLText(cursor.getString(cursor.getColumnIndex(ftDB.L_C_TEXT)));
-                list.setCId(cursor.getLong(cursor.getColumnIndex(ftDB.L_C_FK_CAT)));
+                list.setUId(cursor.getLong(cursor.getColumnIndex(ftDB.L_C_FK_USER)));
                 ftlists.add(list);
             }
         }
@@ -238,36 +289,16 @@ public class dsKit {
     public void createList(
             String nom,
             String lText,
-            long cId){
+            long uId){
 
         ftList fTList = new ftList();
         fTList.setLName(nom);
         fTList.setLText(lText);
-        fTList.setCId(cId);
+        fTList.setUId(uId);
+
         fTList = createList(fTList);
         Log.i(LOGTAG, "List created with Id: " + fTList.getLId());
     }
 
-    public void createCat(String nom,
-                          String cFrom,
-                          String cTo,
-                          String cUnit,
-                          String cSMS,
-                          String cEmail,
-                          String cJustMF,
-                          String cActive,
-                          long uId){
-        Cat cat = new Cat();
-        cat.setCName(nom);
-        cat.setCFrom(cFrom);
-        cat.setCTo(cTo);
-        cat.setCUnit(cUnit);
-        cat.setCSMS(cSMS);
-        cat.setCEmail(cEmail);
-        cat.setCJustMF(cJustMF);
-        cat.setCActive(cActive);
-        cat.setUId(uId);
-        cat = createCat(cat);
-        Log.i(LOGTAG, "Category created with Id: " + cat.getCId());
-    }
+
 }

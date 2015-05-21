@@ -12,7 +12,7 @@ public class ftList {
     private long         lId;
     private String      lName;
     private String      lText;
-    private long         cId;
+    private long         uId;
 
     public ftList() {
     }
@@ -41,12 +41,12 @@ public class ftList {
         this.lText = lText;
     }
 
-    public long getCId() {
-        return cId;
+    public long getUId() {
+        return uId;
     }
 
-    public void setCId(long cId) {
-        this.cId = cId;
+    public void setUId(long uId) {
+        this.uId = uId;
     }
 
     @Override
