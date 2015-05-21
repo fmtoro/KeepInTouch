@@ -15,7 +15,7 @@ public class User implements Serializable{
     private String uEmail;
     private String uImge;
 
-    private boolean uActive;
+    private String uActive;
 
     private String uFrom;
     private String uTo;
@@ -24,11 +24,12 @@ public class User implements Serializable{
     private String uUseEmail;
     private String uJustMF;
 
-    public boolean isUActive() {
+
+    public String getUActive() {
         return uActive;
     }
 
-    public void setUActive(boolean uActive) {
+    public void setUActive(String uActive) {
         this.uActive = uActive;
     }
 
