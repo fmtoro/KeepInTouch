@@ -29,6 +29,10 @@
             android:name=".AddUser"
             android:label="@string/title_activity_add_user" >
         </activity>
+        <activity
+            android:name=".AddListItem"
+            android:label="@string/title_activity_add_list_item" >
+        </activity>
     </application>
 
 </manifest>

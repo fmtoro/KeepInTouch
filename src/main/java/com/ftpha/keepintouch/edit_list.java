@@ -3,12 +3,11 @@ package com.ftpha.keepintouch;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
@@ -22,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class edit_user extends ActionBarActivity {
+public class edit_list extends ActionBarActivity {
 
     private EditText uName;
     private EditText uPhone;
@@ -89,7 +88,13 @@ public class edit_user extends ActionBarActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        //Aqui after this point I get a crash ??? I think before getting to the calling activity???
+        User u = new User();
+        u.setUId(uID);
+        u.setUName(uName.getText().toString());
+        u.setUPhone(uPhone.getText().toString());
+        u.setUEmail(uEmail.getText().toString());
+        u.setUImge(uriStr);
+        u.updateUser(this);
     }
 
     public void onImgClicked(View view) {
@@ -151,7 +156,7 @@ public class edit_user extends ActionBarActivity {
                 getString(R.string.fromGallery),
                 getString(R.string.Cancel)};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(edit_user.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(edit_list.this);
         builder.setTitle(getString(R.string.addPhoto));
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -174,7 +179,7 @@ public class edit_user extends ActionBarActivity {
                 }
                 else if (options[item].equals(getString(R.string.fromGallery)))
                 {
-                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new   Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, 2);
 
                 }
@@ -186,34 +191,30 @@ public class edit_user extends ActionBarActivity {
         builder.show();
     }
 
-    public void onSave(View view) {
-
-        super.onPause();
-        User u = new User();
-        u.setUId(uID);
-        u.setUName(uName.getText().toString());
-        u.setUPhone(uPhone.getText().toString());
-        u.setUEmail(uEmail.getText().toString());
-        if (uriStr == null) {uriStr = "";}
-        u.setUImge(uriStr);
-        u.updateUser(this);
-
-        finish();
-
-    }
-
-    public void onBack(View view) {
-        finish();
-    }
-
-    public void onAddListItem(View view) {
-
-        Intent  addLItemIntent = new Intent(view.getContext(), AddListItem.class);
-
-        startActivity(addLItemIntent);
-
-    }
 
 
-
+//
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_edit_user, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 }

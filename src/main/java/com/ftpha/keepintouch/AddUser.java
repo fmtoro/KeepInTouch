@@ -152,8 +152,16 @@ public class AddUser extends Activity {
         u.setUName(uName.getText().toString());
         u.setUPhone(uPhone.getText().toString());
         u.setUEmail(uEmail.getText().toString());
-        u = u.createUser(u, this);
+        u.setUImge("");
+        u.setUFrom("1");
+        u.setUTo("5");
+        u.setUUnit("Week");
+        u.setUUseSMS("Yes");
+        u.setUUseEmail("No");
+        u.setUJustMF("Yes");
+        u.setUActive("Yes");
 
+        u = u.createUser(u, this);
         finish();
 
     }

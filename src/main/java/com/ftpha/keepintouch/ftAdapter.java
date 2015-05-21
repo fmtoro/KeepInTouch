@@ -51,8 +51,9 @@ public class ftAdapter extends RecyclerView.Adapter<ftAdapter.FtViewH> {
         vHolder.uEmail.setText(current.getUEmail());
         vHolder.txtId.setText(String.valueOf(current.getUId()));
         vHolder.uImgStr.setText(current.getUImge());
-        Uri selectedImage = Uri.parse(current.getUImge());
-        if (!current.getUImge().equals("")) {
+
+        if(current.getUImge() != null && !current.getUImge().isEmpty()) {
+            Uri selectedImage = Uri.parse(current.getUImge());
             Glide.with(contx).load(selectedImage).into(vHolder.uImg);
         }
     }

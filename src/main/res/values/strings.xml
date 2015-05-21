@@ -19,5 +19,8 @@
     <string name="phoneNumber">Phone Number</string>
     <string name="getContact">Get Contact</string>
     <string name="contactsImage">Contact\'s Image</string>
+    <string name="messageName">Message Name:</string>
+    <string name="message">Message:</string>
+    <string name="title_activity_add_list_item">Add List Item</string>
 
 </resources>

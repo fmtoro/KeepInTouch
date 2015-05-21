@@ -18,7 +18,7 @@ public class ftDB extends SQLiteOpenHelper {
     private static final String LOGTAG = "ftpha - sca c r ";
 
     private static final String DB_Name = "ftKIT.db";
-    private static final int DB_V = 10;
+    private static final int DB_V = 11;
 
     public static final String T_USERS = "users";
     public static final String U_C_ID = "uId";
