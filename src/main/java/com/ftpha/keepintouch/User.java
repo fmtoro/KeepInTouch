@@ -15,12 +15,22 @@ public class User implements Serializable{
     private String uEmail;
     private String uImge;
 
+    private boolean uActive;
+
     private String uFrom;
     private String uTo;
     private String uUnit;
     private String uUseSMS;
     private String uUseEmail;
     private String uJustMF;
+
+    public boolean isUActive() {
+        return uActive;
+    }
+
+    public void setUActive(boolean uActive) {
+        this.uActive = uActive;
+    }
 
     public String getUFrom() {
         return uFrom;
