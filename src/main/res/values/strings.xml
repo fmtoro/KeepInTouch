@@ -22,5 +22,8 @@
     <string name="messageName">Message Name:</string>
     <string name="message">Message:</string>
     <string name="title_activity_add_list_item">Add List Item</string>
+    <string name="importData">Import Data</string>
+    <string name="between">Between</string>
+    <string name="timeSpan">Time Span</string>
 
 </resources>

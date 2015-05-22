@@ -34,6 +34,8 @@ public class edit_user extends ActionBarActivity {
     private String currPhPath;
     private Uri elUri;
 
+    public final static String XtraInfo = "com.ftpha.KIT.MESSAGE";
+
     ImageView viewImage;
 
     @Override
@@ -92,10 +94,12 @@ public class edit_user extends ActionBarActivity {
         //Aqui after this point I get a crash ??? I think before getting to the calling activity???
     }
 
+
     public void onImgClicked(View view) {
 
         selectImage();
     }
+
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -119,23 +123,31 @@ public class edit_user extends ActionBarActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
 
-                Glide.with(this).load(elUri).into(viewImage);
-                galleryAddPic();
+                takePictResult();
 
             } else if (requestCode == 2) {
 
 
-
-                Uri selectedImage = data.getData();
-
-                uriStr = selectedImage.toString();
-
-                Glide.with(this).load(selectedImage).into(viewImage);
+                SelectImgResult(data);
 
             }
         }
 
     }
+
+    private void SelectImgResult(Intent data) {
+        Uri selectedImage = data.getData();
+
+        uriStr = selectedImage.toString();
+
+        Glide.with(this).load(selectedImage).into(viewImage);
+    }
+
+    private void takePictResult() {
+        Glide.with(this).load(elUri).into(viewImage);
+        galleryAddPic();
+    }
+
     private void galleryAddPic() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(currPhPath);
@@ -156,8 +168,8 @@ public class edit_user extends ActionBarActivity {
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals(getString(R.string.UseTheCamera)))
-                {
+
+                if (options[item].equals(getString(R.string.UseTheCamera))) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
 //                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
@@ -171,14 +183,11 @@ public class edit_user extends ActionBarActivity {
                     uriStr = elUri.toString();
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, elUri);
                     startActivityForResult(intent, 1);
-                }
-                else if (options[item].equals(getString(R.string.fromGallery)))
-                {
-                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                } else if (options[item].equals(getString(R.string.fromGallery))) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, 2);
 
-                }
-                else if (options[item].equals(getString(R.string.Cancel))) {
+                } else if (options[item].equals(getString(R.string.Cancel))) {
                     dialog.dismiss();
                 }
             }
@@ -209,6 +218,8 @@ public class edit_user extends ActionBarActivity {
     public void onAddListItem(View view) {
 
         Intent  addLItemIntent = new Intent(view.getContext(), AddListItem.class);
+
+        addLItemIntent.putExtra(XtraInfo + "userID", uID);
 
         startActivity(addLItemIntent);
 
