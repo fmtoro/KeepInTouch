@@ -34,7 +34,7 @@ public class ftListAdapter extends RecyclerView.Adapter<ftListAdapter.FtViewH> {
 
     @Override
     public FtViewH onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = inflater.inflate(R.layout.one_row, viewGroup, false);
+        View view = inflater.inflate(R.layout.list_one_row, viewGroup, false);
         FtViewH holder = new FtViewH(view);
 
         return holder;
@@ -45,6 +45,7 @@ public class ftListAdapter extends RecyclerView.Adapter<ftListAdapter.FtViewH> {
         ftList current = lists.get(i);
         vHolder.lName.setText(current.getLName());
         vHolder.lId.setText(String.valueOf(current.getLId()));
+        vHolder.lMessage.setText(current.getLText());
         
     }
 
@@ -57,10 +58,13 @@ public class ftListAdapter extends RecyclerView.Adapter<ftListAdapter.FtViewH> {
         
         TextView lName;
         TextView lId;
+        TextView lMessage;
         public FtViewH(View itemView) {
             super(itemView);
-            lName = (TextView) itemView.findViewById(R.id.uName);
-            lId = (TextView) itemView.findViewById(R.id.txtID);
+            lId = (TextView) itemView.findViewById(R.id.txtListId);
+            lName = (TextView) itemView.findViewById(R.id.itemName);
+            lMessage = (TextView) itemView.findViewById(R.id.txtFullMsg);
+
             itemView.setOnClickListener(this);
         }
 

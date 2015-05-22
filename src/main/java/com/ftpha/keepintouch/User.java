@@ -24,6 +24,16 @@ public class User implements Serializable{
     private String uUseEmail;
     private String uJustMF;
 
+    private String uJustOH;
+
+
+    public String getUJustOH() {
+        return uJustOH;
+    }
+
+    public void setUJustOH(String uJustOH) {
+        this.uJustOH = uJustOH;
+    }
 
     public String getUActive() {
         return uActive;
@@ -122,6 +132,31 @@ public class User implements Serializable{
 
     public void setUEmail(String uEmail) {
         this.uEmail = uEmail;
+    }
+
+    public void getUser(long uID, Context cxt){
+
+        dsKit dsK =  new dsKit(cxt);
+
+        User u = dsK.getUser(uID);
+
+        this.uId       = u.uId         ;
+        this.uName     = u.uName       ;
+        this.uPhone    = u.uPhone      ;
+        this.uEmail    = u.uEmail      ;
+        this.uImge     = u.uImge       ;
+
+        this.uActive   = u.uActive     ;
+
+        this.uFrom     = u.uFrom       ;
+        this.uTo       = u.uTo         ;
+        this.uUnit     = u.uUnit       ;
+        this.uUseSMS   = u.uUseSMS     ;
+        this.uUseEmail = u.uUseEmail   ;
+        this.uJustMF   = u.uJustMF     ;
+        this.uJustOH   = u.uJustOH     ;
+
+
     }
 
     @Override

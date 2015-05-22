@@ -13,8 +13,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import com.bumptech.glide.Glide;
 
@@ -26,12 +28,19 @@ import java.util.List;
 
 
 public class edit_user extends ActionBarActivity {
-
+//**************************  The views
+    private int uID;
     private EditText uName;
     private EditText uPhone;
     private EditText uEmail;
-    private int uID;
-
+    private EditText uFrom;
+    private EditText uTo;
+    private RadioButton rbDay;
+    private RadioButton rbWeek;
+    private RadioButton rbMonth;
+    private CheckBox ckbxOffHours;
+    private CheckBox ckbxMtF;
+    //*************************************
     private String uriStr;
     private  File ftile = null;
     private String currPhPath;
@@ -57,14 +66,17 @@ public class edit_user extends ActionBarActivity {
 
         uID = Integer.parseInt(bundle.getString(ftAdapter.XtraInfo + "usrID"));
 
+        User u = new User();
+        u.getUser(uID, this);
+
+
+
         if(!bundle.getString(ftAdapter.XtraInfo + "uName").equals(""))
         {
             uName.setText(bundle.getString(ftAdapter.XtraInfo + "uName"));
         } else {
             uName.setText("");
         }
-
-
 
         if(!bundle.getString(ftAdapter.XtraInfo + "uPhone").equals(""))
         {
@@ -73,8 +85,6 @@ public class edit_user extends ActionBarActivity {
             uPhone.setText("");
         }
 
-
-
         if(!bundle.getString(ftAdapter.XtraInfo + "uEmail").equals(""))
         {
             uEmail.setText(bundle.getString(ftAdapter.XtraInfo + "uEmail"));
@@ -82,14 +92,15 @@ public class edit_user extends ActionBarActivity {
             uEmail.setText("");
         }
 
-
-
         if(!bundle.getString(ftAdapter.XtraInfo + "uImage").equals(""))
         {
             Uri selectedImage = Uri.parse(bundle.getString(ftAdapter.XtraInfo + "uImage"));
             uriStr = selectedImage.toString();
             Glide.with(this).load(selectedImage).into(viewImage);
         }
+
+        setupRecyclerView();
+
     }
 
 
@@ -225,6 +236,10 @@ public class edit_user extends ActionBarActivity {
         u.setUEmail(uEmail.getText().toString());
         if (uriStr == null) {uriStr = "";}
         u.setUImge(uriStr);
+
+
+
+
         u.updateUser(this);
 
         finish();
@@ -237,11 +252,11 @@ public class edit_user extends ActionBarActivity {
 
     public void onAddListItem(View view) {
 
-        Intent  addLItemIntent = new Intent(view.getContext(), AddListItem.class);
+        final Intent  addLItemIntent = new Intent(view.getContext(), AddListItem.class);
 
         addLItemIntent.putExtra(XtraInfo + "userID", uID);
 
-        startActivity(addLItemIntent);
+        view.getContext().startActivity(addLItemIntent);
 
     }
 

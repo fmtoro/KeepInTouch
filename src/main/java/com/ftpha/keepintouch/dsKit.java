@@ -40,11 +40,13 @@ public class dsKit {
             ftDB.U_C_UNIT,
             ftDB.U_C_USE_SMS,
             ftDB.U_C_USE_EMAIL,
-            ftDB.U_C_JUST_MF
+            ftDB.U_C_JUST_MF,
+            ftDB.U_C_JUST_OH
     };
 
     private static final String[] allLTCs = {
 
+            ftDB.L_C_ID,
             ftDB.L_C_NAME,
             ftDB.L_C_TEXT,
             ftDB.L_C_FK_USER
@@ -89,6 +91,7 @@ public class dsKit {
         values.put(ftDB.U_C_USE_SMS, user.getUUseSMS());
         values.put(ftDB.U_C_USE_EMAIL, user.getUEmail());
         values.put(ftDB.U_C_JUST_MF, user.getUJustMF());
+        values.put(ftDB.U_C_JUST_OH, user.getUJustOH());
         values.put(ftDB.U_C_ACTIVE,     user.getUActive());
 
 
@@ -300,6 +303,48 @@ public class dsKit {
         }
 
         return ftlists;
+    }
+
+    public  User getUser(long uID){
+
+        User user = new User();
+
+        Open();
+
+
+        Cursor cursor = db.query(
+                ftDB.T_USERS,
+                allUTCs,
+                ftDB.U_C_ID + " = " + uID,
+                null,
+                null,
+                null,
+                null);
+
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToNext();
+
+            user.setUId(cursor.getLong(cursor.getColumnIndex(ftDB.U_C_ID)));
+            user.setUName(cursor.getString(cursor.getColumnIndex(ftDB.U_C_NAME)));
+            user.setUPhone(cursor.getString(cursor.getColumnIndex(ftDB.U_C_PHONE)));
+            user.setUEmail(cursor.getString(cursor.getColumnIndex(ftDB.U_C_EMAIL)));
+            if (cursor.getString(cursor.getColumnIndex(ftDB.U_C_IMAGE)) != null) {
+                user.setUImge(cursor.getString(cursor.getColumnIndex(ftDB.U_C_IMAGE)));
+            }
+            user.setUFrom(cursor.getString(cursor.getColumnIndex(ftDB.U_C_FROM)));
+            user.setUTo(cursor.getString(cursor.getColumnIndex(ftDB.U_C_TO)));
+            user.setUUnit(cursor.getString(cursor.getColumnIndex(ftDB.U_C_UNIT)));
+            user.setUUseSMS(cursor.getString(cursor.getColumnIndex(ftDB.U_C_USE_SMS)));
+            user.setUUseEmail(cursor.getString(cursor.getColumnIndex(ftDB.U_C_USE_EMAIL)));
+            user.setUJustMF(cursor.getString(cursor.getColumnIndex(ftDB.U_C_JUST_MF)));
+            user.setUActive(cursor.getString(cursor.getColumnIndex(ftDB.U_C_ACTIVE)));
+
+
+        }
+
+        Close();
+        return user;
     }
 
     public List<ftList> findListForUser(long userID){  //Aqui arreglar esto

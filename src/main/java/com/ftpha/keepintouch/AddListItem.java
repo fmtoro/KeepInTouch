@@ -1,12 +1,15 @@
 package com.ftpha.keepintouch;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import com.bumptech.glide.Glide;
 
 
 public class AddListItem extends Activity {
@@ -25,6 +28,12 @@ public class AddListItem extends Activity {
 
         lName = (EditText) findViewById(R.id.txtMssgName);
         lMssg = (EditText) findViewById(R.id.txtMessage);
+
+
+        Bundle bundle = getIntent().getExtras();
+
+        uID = bundle.getInt(ftAdapter.XtraInfo + "userID");
+
 
 
     }

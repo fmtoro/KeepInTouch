@@ -18,7 +18,7 @@ public class ftDB extends SQLiteOpenHelper {
     private static final String LOGTAG = "ftpha - sca c r ";
 
     private static final String DB_Name = "ftKIT.db";
-    private static final int DB_V = 11;
+    private static final int DB_V = 12;
 
     public static final String T_USERS = "users";
     public static final String U_C_ID = "uId";
@@ -34,6 +34,7 @@ public class ftDB extends SQLiteOpenHelper {
     public static final String U_C_USE_SMS = "cUseSMS";
     public static final String U_C_USE_EMAIL = "cUseEmail";
     public static final String U_C_JUST_MF = "cJustMF";
+    public static final String U_C_JUST_OH = "cJustOH";
 
     public static final String T_LISTS = "lists";
     public static final String L_C_ID = "lId";
@@ -56,7 +57,8 @@ public class ftDB extends SQLiteOpenHelper {
                     U_C_UNIT + " TEXT, " +
                     U_C_USE_SMS + " TEXT, " +
                     U_C_USE_EMAIL + " TEXT, " +
-                    U_C_JUST_MF + " TEXT " +
+                    U_C_JUST_MF + " TEXT, " +
+                    U_C_JUST_OH + " TEXT " +
                     ")";
 
     // Creations
