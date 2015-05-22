@@ -1,5 +1,7 @@
 package com.ftpha.keepintouch;
 
+import android.content.Context;
+
 /**
  * Created by Fernando on 2015-05-04.
  * Originally created as part of: SQLTake2
@@ -53,4 +55,9 @@ public class ftList {
     public String toString() {
         return lName;
     }
+
+    public ftList createListItem(Context cxt){
+        return new dsKit(cxt).createListItem(this);
+    }
+
 }

@@ -89,34 +89,6 @@ public class MainActivity extends Activity {
         dS.Open();
         List<User> users = dS.findAllUsers();
 
-//        if (users.size() == 0) {
-//
-//            dS.createUser(
-//                    "Cuela",
-//                    "1 438 346 7116",
-//                    "mariadanielaaleman@gmail.com",
-//                    "");
-//
-//            dS.createCat(
-//                    "You can",
-//                    "1",
-//                    "3",
-//                    "W",
-//                    "Y",
-//                    "Y",
-//                    "Y",
-//                    "Y",
-//                    1
-//            );
-//
-//            dS.createList(
-//                    "Work",
-//                    "Work will come.",
-//                    1
-//            );
-//            users = dS.findAllUsers();
-//        }
-
 
         RecyclerView ftRV = (RecyclerView) findViewById(R.id.ftRV);
 

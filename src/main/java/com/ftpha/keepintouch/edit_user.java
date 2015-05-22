@@ -10,6 +10,8 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 public class edit_user extends ActionBarActivity {
@@ -33,6 +36,8 @@ public class edit_user extends ActionBarActivity {
     private  File ftile = null;
     private String currPhPath;
     private Uri elUri;
+
+    dsKit dS;
 
     public final static String XtraInfo = "com.ftpha.KIT.MESSAGE";
 
@@ -94,6 +99,21 @@ public class edit_user extends ActionBarActivity {
         //Aqui after this point I get a crash ??? I think before getting to the calling activity???
     }
 
+    private void setupRecyclerView() {  //Aqui pasar a List
+        dS = new dsKit(this);
+        dS.Open();
+        List<ftList> ftLs = dS.findListForUser(uID);
+
+
+        RecyclerView ftRV = (RecyclerView) findViewById(R.id.Lists);
+
+        ftRV.setHasFixedSize(true);
+
+        ftRV.setLayoutManager(new LinearLayoutManager(this));
+
+        ftListAdapter adapter = new ftListAdapter(this, ftLs);
+        ftRV.setAdapter(adapter);
+    }
 
     public void onImgClicked(View view) {
 

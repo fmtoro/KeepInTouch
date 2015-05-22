@@ -2,15 +2,12 @@ package com.ftpha.keepintouch;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 
 import java.util.Collections;
 import java.util.List;
@@ -71,7 +68,6 @@ public class ftListAdapter extends RecyclerView.Adapter<ftListAdapter.FtViewH> {
         public void onClick(final View v) {
 
             final Intent listEditIntent = new Intent(v.getContext(), edit_list.class);
-            listEditIntent.putExtra(XtraInfo + "lName", lName.getText());
             listEditIntent.putExtra(XtraInfo + "lID", lId.getText());
 
             v.getContext().startActivity(listEditIntent);

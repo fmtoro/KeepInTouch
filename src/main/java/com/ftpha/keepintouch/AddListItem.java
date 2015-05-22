@@ -5,43 +5,48 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 
 public class AddListItem extends Activity {
 
+    private ftList ftL;
+    private EditText lName;
+    private EditText lMssg;
+    private long uID;
+    private long lID;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_list_item);
+        setContentView(R.layout.edit_list);
+
+        lName = (EditText) findViewById(R.id.txtMssgName);
+        lMssg = (EditText) findViewById(R.id.txtMessage);
+
+
     }
 
 
 
+    public void XXX(View view) {
 
+        doSave();
 
+    }
 
+    private void doSave() {
+        ftList l = new ftList();
+        l.setLName(lName.getText().toString());
+        l.setLText(lMssg.getText().toString());
+        l.setUId(uID);
 
+        l = l.createListItem(this);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        finish();
+    }
 
 
     @Override
@@ -65,4 +70,5 @@ public class AddListItem extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -43,6 +43,13 @@ public class dsKit {
             ftDB.U_C_JUST_MF
     };
 
+    private static final String[] allLTCs = {
+
+            ftDB.L_C_NAME,
+            ftDB.L_C_TEXT,
+            ftDB.L_C_FK_USER
+    };
+
 
     public dsKit(Context context){
 
@@ -89,6 +96,24 @@ public class dsKit {
         user.setUId(insertUId);
         return user;
     }
+
+    public ftList createListItem(ftList ftL){
+
+        Open();
+
+        ContentValues values = new ContentValues();
+
+        values.put(ftDB.L_C_NAME, ftL.getLName());
+        values.put(ftDB.L_C_TEXT, ftL.getLText());
+        values.put(ftDB.L_C_FK_USER, ftL.getUId());
+        long listItemID = db.insert(ftDB.T_LISTS, null, values);
+        ftL.setLId(listItemID);
+
+        Close();
+
+        return ftL;
+    }
+
 
 
     public User createUser(String nom,
@@ -241,11 +266,6 @@ public class dsKit {
     }
 
 
-
-
-
-
-
     public ftList createList(ftList fTList){
 
         ContentValues values = new ContentValues();
@@ -282,9 +302,33 @@ public class dsKit {
         return ftlists;
     }
 
+    public List<ftList> findListForUser(long userID){  //Aqui arreglar esto
+        List<ftList> ftlists = new ArrayList<ftList>();
 
+        Cursor cursor = db.query(
+                ftDB.T_LISTS,
+                allLTCs,
+                ftDB.L_C_FK_USER + " = " + userID,
+                null,
+                null,
+                null,
+                null);
 
+        Log.i(LOGTAG, "Found " + cursor.getCount() + " rows in " + ftDB.T_USERS);
 
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                ftList list = new ftList();
+                list.setLId(cursor.getLong(cursor.getColumnIndex(ftDB.L_C_ID)));
+                list.setLName(cursor.getString(cursor.getColumnIndex(ftDB.L_C_NAME)));
+                list.setLText(cursor.getString(cursor.getColumnIndex(ftDB.L_C_TEXT)));
+                list.setUId(cursor.getLong(cursor.getColumnIndex(ftDB.L_C_FK_USER)));
+                ftlists.add(list);
+            }
+        }
+
+        return ftlists;
+    } //Aqui Arreglar esto
 
     public void createList(
             String nom,

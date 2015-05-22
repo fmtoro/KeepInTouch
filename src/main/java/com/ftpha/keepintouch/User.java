@@ -130,25 +130,31 @@ public class User implements Serializable{
     }
 
 
+//    public boolean updateUser(User u, Context cxt){
+//        return new dsKit(cxt).updateUser(u);
+//    }
+
     public User createUser(User user, Context cxt){
         return new dsKit(cxt).createUser(user);
     }
-    public boolean updateUser(User u, Context cxt){
-        return new dsKit(cxt).updateUser(u);
-    }
+
+
+
+//    public User createUser(String nom,
+//                           String phone,
+//                           String email,
+//                           String image,
+//                           Context cxt){
+//        dsKit kitDB = new dsKit(cxt);
+//        return kitDB.createUser(nom,
+//                                phone,
+//                                email,
+//                                image);
+//    }
+
+
     public boolean updateUser(Context cxt){
         return new dsKit(cxt).updateUser(this);
-    }
-    public User createUser(String nom,
-                           String phone,
-                           String email,
-                           String image,
-                           Context cxt){
-        dsKit kitDB = new dsKit(cxt);
-        return kitDB.createUser(nom,
-                                phone,
-                                email,
-                                image);
     }
 
 }
