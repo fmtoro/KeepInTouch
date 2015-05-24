@@ -30,7 +30,8 @@ public class AddListItem extends Activity {
 
         lName = (EditText) findViewById(R.id.txtMssgName);
         lMssg = (EditText) findViewById(R.id.txtMessage);
-        long tL;
+        long tL, tU;
+
 
         Bundle bundle = getIntent().getExtras();
 
@@ -40,7 +41,8 @@ public class AddListItem extends Activity {
         addMode = (xAddModeX == 466);
 
         if (addMode) {
-            uID = bundle.getLong(ftAdapter.XtraInfo + "userID");
+            tU = bundle.getLong(ftAdapter.XtraInfo + "userID");
+            uID = tU;
         } else {
             tL = bundle.getLong(ftAdapter.XtraInfo + "lID");
             lID = tL;
@@ -109,4 +111,7 @@ public class AddListItem extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onCancel(View view) {
+        finish();
+    }
 }

@@ -29,7 +29,7 @@ import java.util.List;
 
 public class edit_user extends ActionBarActivity {
 //**************************  The views
-    private int uID;
+    private long uID;
     private EditText uName;
     private EditText uPhone;
     private EditText uEmail;
@@ -71,7 +71,7 @@ public class edit_user extends ActionBarActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        uID = Integer.parseInt(bundle.getString(ftAdapter.XtraInfo + "usrID"));
+        uID = Long.valueOf(bundle.getString(ftAdapter.XtraInfo + "usrID"));
 
         User u = new User();
         u.getUser(uID, this);
@@ -268,15 +268,15 @@ public class edit_user extends ActionBarActivity {
         }
 
         if (ckbxOffHours.isChecked()) {
-            u.setUJustMF("Yes");
-        } else {
-            u.setUJustMF("No");
-        }
-
-        if (ckbxMtF.isChecked()) {
             u.setUJustOH("Yes");
         } else {
             u.setUJustOH("No");
+        }
+
+        if (ckbxMtF.isChecked()) {
+            u.setUJustMF("Yes");
+        } else {
+            u.setUJustMF("No");
         }
 
 
