@@ -19,6 +19,8 @@ public class AddListItem extends Activity {
     private EditText lMssg;
     private long uID;
     private long lID;
+    private boolean addMode;
+    private int xAddModeX;
 
 
     @Override
@@ -32,8 +34,17 @@ public class AddListItem extends Activity {
 
         Bundle bundle = getIntent().getExtras();
 
-        uID = bundle.getInt(ftAdapter.XtraInfo + "userID");
 
+        xAddModeX =  bundle.getInt(ftAdapter.XtraInfo + "xAddModeX");
+
+        addMode = (xAddModeX == 466);
+
+        if (addMode) {
+            uID = bundle.getInt(ftAdapter.XtraInfo + "userID");
+        } else {
+            lID = bundle.getInt(ftAdapter.XtraInfo + "listItemID");
+            populateForm();
+        }
 
 
     }
@@ -46,13 +57,31 @@ public class AddListItem extends Activity {
 
     }
 
+    private void populateForm(){
+        ftList l = new ftList();
+
+        l.getListItem(lID, AddListItem.this);
+
+        lName.setText(l.getLName());
+        lMssg.setText(l.getLText());
+        uID = l.getUId();
+
+    }
+
     private void doSave() {
+
         ftList l = new ftList();
         l.setLName(lName.getText().toString());
         l.setLText(lMssg.getText().toString());
         l.setUId(uID);
 
-        l = l.createListItem(this);
+        if (addMode) {
+            l = l.createListItem(this);
+        } else {
+            l.setLId(lID);
+            l.updateListItem(this);
+        }
+
 
         finish();
     }

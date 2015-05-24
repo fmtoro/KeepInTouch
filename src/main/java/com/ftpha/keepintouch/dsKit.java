@@ -130,6 +130,7 @@ public class dsKit {
                            String uUseSMS,
                            String uUseEmail,
                            String uJustMF,
+                           String uJustOH,
                            String uActive
     ){
         User user = new User();
@@ -145,6 +146,7 @@ public class dsKit {
         user.setUUseSMS(uUseSMS);
         user.setUUseEmail(uUseEmail);
         user.setUJustMF(uJustMF);
+        user.setUJustMF(uJustOH);
         user.setUActive(uActive);
 
         user = createUser(user);
@@ -169,6 +171,7 @@ public class dsKit {
         user.setUUseSMS("Yes");
         user.setUUseEmail("No");
         user.setUJustMF("Yes");
+        user.setUJustOH("Yes");
         user.setUActive("Yes");
 
         user = createUser(user);
@@ -176,6 +179,31 @@ public class dsKit {
 
         return user;
     }
+
+    public boolean updateListItem(ftList l){
+
+        Open();
+        ContentValues vals = new ContentValues();
+
+        vals.put(ftDB.L_C_ID, l.getLId());
+        vals.put(ftDB.L_C_NAME, l.getLName());
+        vals.put(ftDB.L_C_TEXT, l.getLText());
+        vals.put(ftDB.L_C_FK_USER, l.getUId());
+
+
+        boolean rslt;
+
+        rslt = db.update(
+                ftDB.T_LISTS,
+                vals,
+                ftDB.L_C_ID + " = " + l.getLId(),
+                null
+        ) == 1;
+        Close();
+
+        return rslt;
+    }
+
     public boolean updateUser(User u){
 
         return  updateUser(
@@ -191,6 +219,7 @@ public class dsKit {
                 u.getUUseSMS(),
                 u.getUUseEmail(),
                 u.getUJustMF(),
+                u.getUJustOH(),
                 u.getUActive());
 
     }
@@ -208,6 +237,7 @@ public class dsKit {
             String uUseSMS      ,
             String uUseEmail    ,
             String uJustMF      ,
+            String uJustOH      ,
             String uActive
     ){
 
@@ -225,15 +255,21 @@ public class dsKit {
         vals.put(ftDB.U_C_USE_SMS,   uUseSMS    );
         vals.put(ftDB.U_C_USE_EMAIL, uUseEmail  );
         vals.put(ftDB.U_C_JUST_MF,   uJustMF    );
+        vals.put(ftDB.U_C_JUST_OH,   uJustOH    );
         vals.put(ftDB.U_C_ACTIVE,    uActive    );
 
 
         boolean rslt;
 
-        rslt = db.update(ftDB.T_USERS, vals, ftDB.U_C_ID + " = " + uID,null ) == 1;
+        rslt = db.update(
+                ftDB.T_USERS,
+                vals,
+                ftDB.U_C_ID + " = " + uID,
+                null
+        ) == 1;
         Close();
 
-            return rslt;
+        return rslt;
     }
 
     public List<User> findAllUsers(){
@@ -259,6 +295,7 @@ public class dsKit {
                 user.setUUseSMS(cursor.getString(cursor.getColumnIndex(ftDB.U_C_USE_SMS)));
                 user.setUUseEmail(cursor.getString(cursor.getColumnIndex(ftDB.U_C_USE_EMAIL)));
                 user.setUJustMF(cursor.getString(cursor.getColumnIndex(ftDB.U_C_JUST_MF)));
+                user.setUJustOH(cursor.getString(cursor.getColumnIndex(ftDB.U_C_JUST_OH)));
                 user.setUActive(cursor.getString(cursor.getColumnIndex(ftDB.U_C_ACTIVE)));
 
                 users.add(user);
@@ -305,6 +342,38 @@ public class dsKit {
         return ftlists;
     }
 
+
+    public ftList getFtList(long lID){
+        ftList ftL = new ftList();
+
+        Open();
+
+        Cursor cursor = db.query(
+                ftDB.T_LISTS,
+                allLTCs,
+                ftDB.L_C_ID + " = " + lID,
+                null,
+                null,
+                null,
+                null
+        );
+
+        if (cursor.getCount() > 0) {
+
+            cursor.moveToNext();
+            ftL.setLId(cursor.getLong(cursor.getColumnIndex(ftDB.L_C_ID)));
+            ftL.setLName(cursor.getString(cursor.getColumnIndex(ftDB.L_C_NAME)));
+            ftL.setLText(cursor.getString(cursor.getColumnIndex(ftDB.L_C_TEXT)));
+            ftL.setUId(cursor.getLong(cursor.getColumnIndex(ftDB.L_C_FK_USER)));
+        }
+
+
+        Close();
+        return ftL;
+
+    }
+
+
     public  User getUser(long uID){
 
         User user = new User();
@@ -338,6 +407,7 @@ public class dsKit {
             user.setUUseSMS(cursor.getString(cursor.getColumnIndex(ftDB.U_C_USE_SMS)));
             user.setUUseEmail(cursor.getString(cursor.getColumnIndex(ftDB.U_C_USE_EMAIL)));
             user.setUJustMF(cursor.getString(cursor.getColumnIndex(ftDB.U_C_JUST_MF)));
+            user.setUJustOH(cursor.getString(cursor.getColumnIndex(ftDB.U_C_JUST_OH)));
             user.setUActive(cursor.getString(cursor.getColumnIndex(ftDB.U_C_ACTIVE)));
 
 

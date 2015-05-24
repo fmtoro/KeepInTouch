@@ -23,6 +23,23 @@ public class ftList {
         return lId;
     }
 
+
+    public void getListItem(long lId, Context cxt){
+
+        dsKit dsK =  new dsKit(cxt);
+
+        ftList ftL = dsK.getFtList(lId);
+
+        this.lId = ftL.lId;
+        this.lName = ftL.lName;
+        this.lText = ftL.lText;
+        this.uId = ftL.uId;
+
+
+    }
+
+
+
     public void setLId(long lId) {
         this.lId = lId;
     }
@@ -60,4 +77,7 @@ public class ftList {
         return new dsKit(cxt).createListItem(this);
     }
 
+    public boolean updateListItem(Context cxt){
+        return new dsKit(cxt).updateListItem(this);
+    }
 }

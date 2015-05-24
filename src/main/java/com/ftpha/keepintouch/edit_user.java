@@ -61,6 +61,13 @@ public class edit_user extends ActionBarActivity {
         uPhone = (EditText) findViewById(R.id.txtUPhone);
         uEmail = (EditText) findViewById(R.id.txtUEmail);
         viewImage=(ImageView)findViewById(R.id.uImage);
+        uFrom = (EditText) findViewById(R.id.txtFrom);
+        uTo = (EditText) findViewById(R.id.txtTo);
+        rbDay = (RadioButton) findViewById(R.id.rbDay);
+        rbWeek = (RadioButton) findViewById(R.id.rbWeek);
+        rbMonth = (RadioButton) findViewById(R.id.rbMonth);
+        ckbxOffHours = (CheckBox) findViewById(R.id.ckbxOffHours);
+        ckbxMtF = (CheckBox) findViewById(R.id.ckbxMtF);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -70,27 +77,34 @@ public class edit_user extends ActionBarActivity {
         u.getUser(uID, this);
 
 
+        uName.setText(u.getUName());
+        uPhone.setText(u.getUPhone());
+        uEmail.setText(u.getUEmail());
+        uFrom.setText(u.getUFrom());
+        uTo.setText(u.getUTo());
+        rbDay.setChecked(false);
+        rbWeek.setChecked(false);
+        rbMonth.setChecked(false);
+        ckbxOffHours.setChecked(true);
+        ckbxMtF.setChecked(true);
 
-        if(!bundle.getString(ftAdapter.XtraInfo + "uName").equals(""))
-        {
-            uName.setText(bundle.getString(ftAdapter.XtraInfo + "uName"));
-        } else {
-            uName.setText("");
+        if (u.getUUnit().equals("Day")) {
+            rbDay.setChecked(true);
+        }else if (u.getUUnit().equals("Week")) {
+            rbWeek.setChecked(true);
+        }else if (u.getUUnit().equals("Month")) {
+            rbMonth.setChecked(true);
         }
 
-        if(!bundle.getString(ftAdapter.XtraInfo + "uPhone").equals(""))
-        {
-            uPhone.setText(bundle.getString(ftAdapter.XtraInfo + "uPhone"));
-        } else {
-            uPhone.setText("");
+        if (!u.getUJustMF().equals("Yes")) {
+            ckbxMtF.setChecked(false);
+        }
+        if (!u.getUJustOH().equals("Yes")) {
+            ckbxOffHours.setChecked(false);
         }
 
-        if(!bundle.getString(ftAdapter.XtraInfo + "uEmail").equals(""))
-        {
-            uEmail.setText(bundle.getString(ftAdapter.XtraInfo + "uEmail"));
-        } else {
-            uEmail.setText("");
-        }
+
+
 
         if(!bundle.getString(ftAdapter.XtraInfo + "uImage").equals(""))
         {
@@ -103,12 +117,6 @@ public class edit_user extends ActionBarActivity {
 
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //Aqui after this point I get a crash ??? I think before getting to the calling activity???
-    }
 
     private void setupRecyclerView() {  //Aqui pasar a List
         dS = new dsKit(this);
@@ -255,6 +263,7 @@ public class edit_user extends ActionBarActivity {
         final Intent  addLItemIntent = new Intent(view.getContext(), AddListItem.class);
 
         addLItemIntent.putExtra(XtraInfo + "userID", uID);
+        addLItemIntent.putExtra(XtraInfo + "xAddModeX", 466);
 
         view.getContext().startActivity(addLItemIntent);
 
