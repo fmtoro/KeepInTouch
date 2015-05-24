@@ -246,6 +246,33 @@ public class edit_user extends ActionBarActivity {
         u.setUImge(uriStr);
 
 
+        u.setUActive("Yes"); //Aqui: change this on implementing Active
+
+        u.setUFrom(uFrom.getText().toString());
+        u.setUTo(uTo.getText().toString());
+        u.setUUseSMS("Yes");            //Aqui: change this if I implement this
+        u.setUUseEmail("Yes");          //Aqui: change this if I implement this
+
+        if (rbDay.isChecked()) {
+            u.setUUnit("Day");
+        }else if (rbWeek.isChecked()) {
+            u.setUUnit("Week");
+        } else if (rbMonth.isChecked()) {
+            u.setUUnit("Month");
+        }
+
+        if (ckbxOffHours.isChecked()) {
+            u.setUJustMF("Yes");
+        } else {
+            u.setUJustMF("No");
+        }
+
+        if (ckbxMtF.isChecked()) {
+            u.setUJustOH("Yes");
+        } else {
+            u.setUJustOH("No");
+        }
+
 
 
         u.updateUser(this);
