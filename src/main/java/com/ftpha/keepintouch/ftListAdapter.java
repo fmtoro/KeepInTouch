@@ -71,9 +71,11 @@ public class ftListAdapter extends RecyclerView.Adapter<ftListAdapter.FtViewH> {
         @Override
         public void onClick(final View v) {
 
+            long tmpL = Long.valueOf(lId.getText().toString());
+
             final Intent listEditIntent = new Intent(v.getContext(), AddListItem.class);
-            listEditIntent.putExtra(XtraInfo + "xAddModeX", 466);
-            listEditIntent.putExtra(XtraInfo + "lID", lId.getText());
+            listEditIntent.putExtra(XtraInfo + "xAddModeX", 746);
+            listEditIntent.putExtra(XtraInfo + "lID", tmpL);
 
             v.getContext().startActivity(listEditIntent);
 

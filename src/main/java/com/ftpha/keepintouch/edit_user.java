@@ -134,6 +134,12 @@ public class edit_user extends ActionBarActivity {
         ftRV.setAdapter(adapter);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setupRecyclerView();
+    }
+
     public void onImgClicked(View view) {
 
         selectImage();

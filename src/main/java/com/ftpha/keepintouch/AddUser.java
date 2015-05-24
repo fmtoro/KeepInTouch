@@ -259,6 +259,7 @@ public class AddUser extends Activity {
         u.setUUseSMS("Yes");
         u.setUUseEmail("No");
         u.setUJustMF("Yes");
+        u.setUJustOH("Yes");
         u.setUActive("Yes");
 
         u = u.createUser(u, this);

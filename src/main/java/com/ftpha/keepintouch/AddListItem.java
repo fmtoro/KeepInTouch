@@ -30,7 +30,7 @@ public class AddListItem extends Activity {
 
         lName = (EditText) findViewById(R.id.txtMssgName);
         lMssg = (EditText) findViewById(R.id.txtMessage);
-
+        long tL;
 
         Bundle bundle = getIntent().getExtras();
 
@@ -40,15 +40,15 @@ public class AddListItem extends Activity {
         addMode = (xAddModeX == 466);
 
         if (addMode) {
-            uID = bundle.getInt(ftAdapter.XtraInfo + "userID");
+            uID = bundle.getLong(ftAdapter.XtraInfo + "userID");
         } else {
-            lID = bundle.getInt(ftAdapter.XtraInfo + "listItemID");
+            tL = bundle.getLong(ftAdapter.XtraInfo + "lID");
+            lID = tL;
             populateForm();
         }
 
 
     }
-
 
 
     public void XXX(View view) {
